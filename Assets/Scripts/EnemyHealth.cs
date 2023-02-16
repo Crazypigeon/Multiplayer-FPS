@@ -27,11 +27,7 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if ((health * 100 / health) <= 50)
-            enemyMaterial.material.color = midHealthColor;
 
-        else if ((health * 100 / health) <= 20)
-            enemyMaterial.material.color = lowHealthColor;
     }
 
     public void TakeDamage(int damage)
@@ -42,6 +38,10 @@ public class EnemyHealth : MonoBehaviour
     }
     public void ChangeColor()
     {
+        if (health <= 50 && health > 20)
+            enemyMaterial.material.color = midHealthColor;
 
+        else if (health <= 20)
+            enemyMaterial.material.color = lowHealthColor;
     }
 }
