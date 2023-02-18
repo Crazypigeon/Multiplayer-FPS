@@ -13,6 +13,8 @@ public class MoveToPlayer : MonoBehaviour
         player = GameObject.Find("PolicemanController(Clone)");
 
         Vector3 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+
+
         transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
     }
 

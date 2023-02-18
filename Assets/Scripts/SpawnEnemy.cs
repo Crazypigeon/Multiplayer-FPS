@@ -8,6 +8,8 @@ public class SpawnEnemy : MonoBehaviour
 
     [SerializeField] private float minSpawnDelay;
     [SerializeField] private float maxSpawnDelay;
+    [SerializeField] private int numberOfEnemy;
+
 
     private void Start()
     {
@@ -16,8 +18,9 @@ public class SpawnEnemy : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        while (true)
+        while (numberOfEnemy > 0)
         {
+            numberOfEnemy--;
             Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             float spawnDelay = Random.Range(minSpawnDelay, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
