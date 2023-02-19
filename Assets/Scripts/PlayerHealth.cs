@@ -41,6 +41,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     private FirstPersonController fpController;
     private IKControl ikControl;
     private Slider healthSlider;
+    public Slider healthSlider2;
     private Image damageImage;
     private int currentHealth;
     private bool isDead;
@@ -62,6 +63,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         {
             gameObject.layer = LayerMask.NameToLayer("FPSPlayer");
             healthSlider.value = currentHealth;
+            healthSlider2.value = currentHealth;
         }
         damaged = false;
         isDead = false;
@@ -106,6 +108,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
                 photonView.RPC("Death", RpcTarget.All, enemyName);
             }
             healthSlider.value = currentHealth;
+            healthSlider2.value = currentHealth;
             animator.SetTrigger("IsHurt");
         }
         playerAudio.clip = hurtClip;
