@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class NetworkManager : MonoBehaviourPunCallbacks {
+public class NetworkManager : MonoBehaviourPunCallbacks
+{
 
     [SerializeField]
     private Text connectionText;
@@ -39,9 +40,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start() {
-        messages = new Queue<string> (messageCount);
-        if (PlayerPrefs.HasKey(nickNamePrefKey)) {
+    void Start()
+    {
+        messages = new Queue<string>(messageCount);
+        if (PlayerPrefs.HasKey(nickNamePrefKey))
+        {
             username.text = PlayerPrefs.GetString(nickNamePrefKey);
         }
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -52,7 +55,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// <summary>
     /// Called on the client when you have successfully connected to a master server.
     /// </summary>
-    public override void OnConnectedToMaster() {
+    private void Update()
+    {
+
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            JoinRoom();
+            Respawn(0);
+            Debug.Log("enter");
+
+        }
+    }
+
+    public override void OnConnectedToMaster()
+    {
         PhotonNetwork.JoinLobby();
     }
 
@@ -60,14 +77,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// Called on the client when the connection was lost or you disconnected from the server.
     /// </summary>
     /// <param name="cause">DisconnectCause data associated with this disconnect.</param>
-    public override void OnDisconnected(DisconnectCause cause) {
+    public override void OnDisconnected(DisconnectCause cause)
+    {
         connectionText.text = cause.ToString();
     }
 
     /// <summary>
     /// Callback function on joined lobby.
     /// </summary>
-    public override void OnJoinedLobby() {
+    public override void OnJoinedLobby()
+    {
         serverWindow.SetActive(true);
         connectionText.text = "";
     }
@@ -76,9 +95,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// Callback function on reveived room list update.
     /// </summary>
     /// <param name="rooms">List of RoomInfo.</param>
-    public override void OnRoomListUpdate(List<RoomInfo> rooms) {
+    public override void OnRoomListUpdate(List<RoomInfo> rooms)
+    {
         roomList.text = "";
-        foreach (RoomInfo room in rooms) {
+        foreach (RoomInfo room in rooms)
+        {
             roomList.text += room.Name + "\n";
         }
     }
@@ -86,18 +107,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// <summary>
     /// The button click callback function for join room.
     /// </summary>
-    public void JoinRoom() {
+    public void JoinRoom()
+    {
         serverWindow.SetActive(false);
         connectionText.text = "Joining room...";
         PhotonNetwork.LocalPlayer.NickName = username.text;
         PlayerPrefs.SetString(nickNamePrefKey, username.text);
-        RoomOptions roomOptions = new RoomOptions() {
+        RoomOptions roomOptions = new RoomOptions()
+        {
             IsVisible = true,
             MaxPlayers = 8
         };
-        if (PhotonNetwork.IsConnectedAndReady) {
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
             PhotonNetwork.JoinOrCreateRoom(roomName.text, roomOptions, TypedLobby.Default);
-        } else {
+        }
+        else
+        {
             connectionText.text = "PhotonNetwork connection is not ready, try restart it.";
         }
     }
@@ -105,7 +131,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// <summary>
     /// Callback function on joined room.
     /// </summary>
-    public override void OnJoinedRoom() {
+    public override void OnJoinedRoom()
+    {
         connectionText.text = "";
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -116,7 +143,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// Start spawn or respawn a player.
     /// </summary>
     /// <param name="spawnTime">Time waited before spawn a player.</param>
-    void Respawn(float spawnTime) {
+    public void Respawn(float spawnTime)
+    {
         sightImage.SetActive(false);
         sceneCamera.enabled = true;
         StartCoroutine(RespawnCoroutine(spawnTime));
@@ -126,7 +154,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// The coroutine function to spawn player.
     /// </summary>
     /// <param name="spawnTime">Time waited before spawn a player.</param>
-    IEnumerator RespawnCoroutine(float spawnTime) {
+    IEnumerator RespawnCoroutine(float spawnTime)
+    {
         yield return new WaitForSeconds(spawnTime);
         messageWindow.SetActive(true);
         sightImage.SetActive(true);
@@ -137,9 +166,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         playerHealth.RespawnEvent += Respawn;
         playerHealth.AddMessageEvent += AddMessage;
         sceneCamera.enabled = false;
-        if (spawnTime == 0) {
+        if (spawnTime == 0)
+        {
             AddMessage("Player " + PhotonNetwork.LocalPlayer.NickName + " Joined Game.");
-        } else {
+        }
+        else
+        {
             AddMessage("Player " + PhotonNetwork.LocalPlayer.NickName + " Respawned.");
         }
     }
@@ -148,7 +180,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// Add message to message panel.
     /// </summary>
     /// <param name="message">The message that we want to add.</param>
-    void AddMessage(string message) {
+    void AddMessage(string message)
+    {
         photonView.RPC("AddMessage_RPC", RpcTarget.All, message);
     }
 
@@ -157,13 +190,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// </summary>
     /// <param name="message">The message that we want to add.</param>
     [PunRPC]
-    void AddMessage_RPC(string message) {
+    void AddMessage_RPC(string message)
+    {
         messages.Enqueue(message);
-        if (messages.Count > messageCount) {
+        if (messages.Count > messageCount)
+        {
             messages.Dequeue();
         }
         messagesLog.text = "";
-        foreach (string m in messages) {
+        foreach (string m in messages)
+        {
             messagesLog.text += m + "\n";
         }
     }
@@ -171,8 +207,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     /// <summary>
     /// Callback function when other player disconnected.
     /// </summary>
-    public override void OnPlayerLeftRoom(Player other) {
-        if (PhotonNetwork.IsMasterClient) {
+    public override void OnPlayerLeftRoom(Player other)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
             AddMessage("Player " + other.NickName + " Left Game.");
         }
     }

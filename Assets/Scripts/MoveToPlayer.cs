@@ -16,6 +16,8 @@ public class MoveToPlayer : MonoBehaviour
 
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+
+        transform.LookAt(player.transform);
     }
 
     private void OnTriggerEnter(Collider other)

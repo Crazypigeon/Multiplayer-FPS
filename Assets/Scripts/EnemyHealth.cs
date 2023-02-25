@@ -14,10 +14,13 @@ public class EnemyHealth : MonoBehaviour
     public Color midHealthColor;
     public Color lowHealthColor;
 
+    public NextLevelLoader enemiesNumber;
+
     private void Awake()
     {
         maxHalth = health;
         enemyMaterial.material.color = fullHealthColor;
+        enemiesNumber = GameObject.Find("NextLevelLoader").GetComponent<NextLevelLoader>();
     }
 
     void Update()
@@ -25,6 +28,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            enemiesNumber.enemyKilled();
         }
 
 
