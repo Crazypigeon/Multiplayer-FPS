@@ -63,8 +63,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             JoinRoom();
             Respawn(0);
-            Debug.Log("enter");
-
         }
     }
 
@@ -182,7 +180,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message">The message that we want to add.</param>
     void AddMessage(string message)
     {
-        photonView.RPC("AddMessage_RPC", RpcTarget.All, message);
+        //photonView.RPC("AddMessage_RPC", RpcTarget.All, message);
     }
 
     /// <summary>

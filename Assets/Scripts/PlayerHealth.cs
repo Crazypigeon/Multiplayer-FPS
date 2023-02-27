@@ -40,11 +40,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 
     private FirstPersonController fpController;
     private IKControl ikControl;
-    private Slider healthSlider;
+    public Slider healthSlider;
     public Slider healthSlider2;
     private Image damageImage;
     private int currentHealth;
-    private bool isDead;
+    public bool isDead;
     private bool isSinking;
     private bool damaged;
 
@@ -57,7 +57,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         fpController = GetComponent<FirstPersonController>();
         ikControl = GetComponentInChildren<IKControl>();
         damageImage = GameObject.FindGameObjectWithTag("Screen2D").transform.Find("DamageImage").GetComponent<Image>();
-        healthSlider = GameObject.FindGameObjectWithTag("Screen").GetComponentInChildren<Slider>();
         currentHealth = startingHealth;
         if (photonView.IsMine)
         {
@@ -98,6 +97,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void TakeDamage(int amount, string enemyName)
     {
+        Debug.Log(currentHealth);
+
         if (isDead) return;
         if (photonView.IsMine)
         {
@@ -106,6 +107,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             if (currentHealth <= 0)
             {
                 photonView.RPC("Death", RpcTarget.All, enemyName);
+                Debug.Log("respawning...");
+
+
             }
             healthSlider.value = currentHealth;
             healthSlider2.value = currentHealth;
