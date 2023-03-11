@@ -8,18 +8,19 @@ public class EnemyHealth : MonoBehaviour
     private int maxHalth;
     public ParticleSystem hitVFX;
 
-    public MeshRenderer enemyMaterial;
+    public Material enemyMaterial;
 
     public Color fullHealthColor;
     public Color midHealthColor;
     public Color lowHealthColor;
 
     public NextLevelLoader enemiesNumber;
-
+    public SkinnedMeshRenderer mesh;
     private void Awake()
     {
+        enemyMaterial = mesh.material;
         maxHalth = health;
-        enemyMaterial.material.color = fullHealthColor;
+        enemyMaterial.color = fullHealthColor;
         enemiesNumber = GameObject.Find("NextLevelLoader").GetComponent<NextLevelLoader>();
     }
 
@@ -43,9 +44,9 @@ public class EnemyHealth : MonoBehaviour
     public void ChangeColor()
     {
         if (health <= 50 && health > 20)
-            enemyMaterial.material.color = midHealthColor;
+            enemyMaterial.color = midHealthColor;
 
         else if (health <= 20)
-            enemyMaterial.material.color = lowHealthColor;
+            enemyMaterial.color = lowHealthColor;
     }
 }

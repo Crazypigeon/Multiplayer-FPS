@@ -111,6 +111,18 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 
 
             }
+
+            if (currentHealth <= 70 && currentHealth > 30)
+            {
+                animator.SetLayerWeight(4, 0);
+                animator.SetLayerWeight(5, 0.5f);
+
+            }
+            if (currentHealth <= 20 && currentHealth < 70)
+            {
+                animator.SetLayerWeight(4, 1);
+                animator.SetLayerWeight(5, 0);
+            }
             healthSlider.value = currentHealth;
             healthSlider2.value = currentHealth;
             animator.SetTrigger("IsHurt");
