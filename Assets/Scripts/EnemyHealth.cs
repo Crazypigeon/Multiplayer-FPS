@@ -11,7 +11,6 @@ public class EnemyHealth : MonoBehaviour
     public Material enemyMaterial;
 
     public Color fullHealthColor;
-    public Color midHealthColor;
     public Color lowHealthColor;
 
     public NextLevelLoader enemiesNumber;
@@ -43,10 +42,6 @@ public class EnemyHealth : MonoBehaviour
     }
     public void ChangeColor()
     {
-        if (health <= 50 && health > 20)
-            enemyMaterial.color = midHealthColor;
-
-        else if (health <= 20)
-            enemyMaterial.color = lowHealthColor;
+        enemyMaterial.color = Color.Lerp(lowHealthColor, fullHealthColor, (float)health / 100);
     }
 }

@@ -43,7 +43,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     public Slider healthSlider;
     public Slider healthSlider2;
     private Image damageImage;
-    private int currentHealth;
+    public int currentHealth { get; private set; }
     public bool isDead;
     private bool isSinking;
     private bool damaged;
@@ -97,7 +97,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void TakeDamage(int amount, string enemyName)
     {
-        Debug.Log(currentHealth);
+        // Debug.Log(currentHealth);
 
         if (isDead) return;
         if (photonView.IsMine)
