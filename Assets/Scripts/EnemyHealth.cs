@@ -15,7 +15,7 @@ public class EnemyHealth : MonoBehaviour
     public Color lowHealthColor;
 
     public NextLevelLoader enemiesNumber;
-    public SkinnedMeshRenderer mesh;
+    public MeshRenderer mesh;
     private void Awake()
     {
         enemyMaterial = mesh.material;
