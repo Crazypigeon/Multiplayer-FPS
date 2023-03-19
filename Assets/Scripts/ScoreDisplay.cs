@@ -10,24 +10,25 @@ public class ScoreDisplay : MonoBehaviour
 
     private int neededScore;
     private int currentScore;
-    private Text text;
+    public Text text;
+    public GameObject info;
 
     private void Awake()
     {
-        text = this.GetComponent<Text>();
         neededScore = score.enemiesNumber;
     }
 
     void Start()
     {
-        text.text = " ";
+        info.SetActive(false);
     }
 
     void Update()
     {
         if ((neededScore - score.enemiesNumber) >= 1)
         {
-            text.text = (neededScore - score.enemiesNumber) + " / " + neededScore;
+            info.SetActive(true);
+            text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
         }
     }
 }
