@@ -20,11 +20,12 @@ public class ScoreDisplay : MonoBehaviour
 
     void Start()
     {
-        text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
+        text.text = " ";
     }
 
     void Update()
     {
-        text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
+        if ((neededScore - score.enemiesNumber) >= 1)
+            text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
     }
 }
