@@ -28,7 +28,7 @@ public class ScoreDisplay : MonoBehaviour
         if ((neededScore - score.enemiesNumber) >= 1)
         {
             info.SetActive(true);
-            text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
+            text.text = (neededScore - score.enemiesNumber) + " / " + neededScore;
         }
     }
 }
