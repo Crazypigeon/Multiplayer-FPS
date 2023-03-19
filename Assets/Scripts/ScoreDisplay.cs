@@ -26,6 +26,8 @@ public class ScoreDisplay : MonoBehaviour
     void Update()
     {
         if ((neededScore - score.enemiesNumber) >= 1)
-            text.text = "įveikei " + (neededScore - score.enemiesNumber) + " priešus iš " + neededScore;
+        {
+            text.text = (neededScore - score.enemiesNumber) + " / " + neededScore;
+        }
     }
 }
