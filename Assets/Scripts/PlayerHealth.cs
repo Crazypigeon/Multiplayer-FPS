@@ -37,6 +37,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     private NameTag nameTag;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private GameObject deadPanel;
+
 
     private FirstPersonController fpController;
     private IKControl ikControl;
@@ -106,6 +109,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
+
                 photonView.RPC("Death", RpcTarget.All, enemyName);
                 Debug.Log("respawning...");
 
@@ -146,8 +150,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             fpController.enabled = false;
             animator.SetTrigger("IsDead");
             AddMessageEvent(PhotonNetwork.LocalPlayer.NickName + " was killed by " + enemyName + "!");
-            RespawnEvent(respawnTime);
-            StartCoroutine("DestoryPlayer", respawnTime);
+            deadPanel.gameObject.SetActive(true);
+            fpController.m_MouseLook.SetCursorLock(false);
+            fpController.m_MouseLook.UpdateCursorLock();
+            fpController.enabled = false;
+            // RespawnEvent(respawnTime);
+            // StartCoroutine("DestoryPlayer", respawnTime);
         }
         playerAudio.clip = deathClip;
         playerAudio.Play();
@@ -163,7 +171,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(delayTime);
         PhotonNetwork.Destroy(gameObject);
     }
-
+    public void RespawnPlayer()
+    {
+        deadPanel.gameObject.SetActive(false);
+        fpController.enabled = true;
+        fpController.m_MouseLook.SetCursorLock(true);
+        fpController.m_MouseLook.UpdateCursorLock();
+        RespawnEvent(respawnTime);
+        StartCoroutine("DestoryPlayer", respawnTime);
+    }
     /// <summary>
     /// RPC function to start sinking the player game object.
     /// </summary>

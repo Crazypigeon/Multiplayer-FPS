@@ -43,5 +43,6 @@ public class EnemyHealth : MonoBehaviour
     public void ChangeColor()
     {
         enemyMaterial.color = Color.Lerp(lowHealthColor, fullHealthColor, (float)health / 100);
+        enemyMaterial.SetColor("_EmissionColor", Color.Lerp(lowHealthColor, fullHealthColor, (float)health / 100));
     }
 }
