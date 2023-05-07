@@ -57,6 +57,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     /// </summary>
     void Start()
     {
+        MinimapNew.Instance.AttachPlayer();
         fpController = GetComponent<FirstPersonController>();
         ikControl = GetComponentInChildren<IKControl>();
         damageImage = GameObject.FindGameObjectWithTag("Screen2D").transform.Find("DamageImage").GetComponent<Image>();
