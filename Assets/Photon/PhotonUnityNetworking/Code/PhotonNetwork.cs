@@ -1934,7 +1934,7 @@ namespace Photon.Pun
         /// <summary>
         /// Internally used helper-method to setup an offline room, the numbers for actor and master-client and to do the callbacks.
         /// </summary>
-        private static void EnterOfflineRoom(string roomName, RoomOptions roomOptions, bool createdRoom)
+        public static void EnterOfflineRoom(string roomName, RoomOptions roomOptions, bool createdRoom)
         {
             offlineModeRoom = new Room(roomName, roomOptions, true);
             NetworkingClient.ChangeLocalID(1);

@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     void Start()
     {
+        PhotonNetwork.OfflineMode = true;
         messages = new Queue<string>(messageCount);
         if (PlayerPrefs.HasKey(nickNamePrefKey))
         {
@@ -114,7 +115,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomOptions roomOptions = new RoomOptions()
         {
             IsVisible = true,
-            MaxPlayers = 8
+            MaxPlayers = 1
         };
         if (PhotonNetwork.IsConnectedAndReady)
         {
