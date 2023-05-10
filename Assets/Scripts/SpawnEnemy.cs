@@ -18,6 +18,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(30);
         while (numberOfEnemy > 0)
         {
             numberOfEnemy--;
