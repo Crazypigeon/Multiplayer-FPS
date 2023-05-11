@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
-public class DoorAnimation : MonoBehaviour {
+public class DoorAnimation : MonoBehaviour
+{
 
     [SerializeField]
     private float minPosY = 2.74f;
@@ -17,7 +19,8 @@ public class DoorAnimation : MonoBehaviour {
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start() {
+    void Start()
+    {
         animator = GetComponent<Animator>();
         posx = transform.position.x;
         posz = transform.position.z;
@@ -26,7 +29,8 @@ public class DoorAnimation : MonoBehaviour {
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update() {
+    void Update()
+    {
         transform.position = new Vector3(posx, Mathf.Clamp(transform.position.y, minPosY, maxPosY), posz);
     }
 
@@ -35,8 +39,11 @@ public class DoorAnimation : MonoBehaviour {
     /// that is touching the trigger.
     /// </summary>
     /// <param name="other">The other Collider involved in this collision.</param>
-    void OnTriggerStay(Collider other) {
-        if (other.gameObject.tag == "Player") {
+    void OnTriggerStay(Collider other)
+    {
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag == "Player")
+        {
             animator.SetBool("Trigger", true);
         }
     }
@@ -45,8 +52,10 @@ public class DoorAnimation : MonoBehaviour {
     /// OnTriggerExit is called when the Collider other has stopped touching the trigger.
     /// </summary>
     /// <param name="other">The other Collider involved in this collision.</param>
-    void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "Player") {
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
             animator.SetBool("Trigger", false);
         }
     }

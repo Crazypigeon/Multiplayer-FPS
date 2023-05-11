@@ -1458,6 +1458,7 @@ namespace Photon.Pun
                 if (PhotonNetwork.LogLevel >= PunLogLevel.Informational)
                     Debug.Log("New level loaded. Removed " + removeKeys.Count + " scene view IDs from last level.");
             }
+            PhotonNetwork.Disconnect();
         }
 
 

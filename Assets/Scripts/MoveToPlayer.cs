@@ -25,7 +25,7 @@ public class MoveToPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+
         if (collision.gameObject.tag == "Player")
         {
             takingDamage = true;
@@ -53,8 +53,15 @@ public class MoveToPlayer : MonoBehaviour
     {
         while (takingDamage)
         {
-            player.GetComponent<PlayerHealth>().TakeDamage(damage, "Enemy");
-            yield return new WaitForSeconds(1);
+            if (player.GetComponent<PlayerHealth>().isDead)
+            {
+                takingDamage = false;
+            }
+            else
+            {
+                player.GetComponent<PlayerHealth>().TakeDamage(damage, "Enemy");
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 
