@@ -9,6 +9,7 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField] private float minSpawnDelay;
     [SerializeField] private float maxSpawnDelay;
     [SerializeField] private int numberOfEnemy;
+    [SerializeField] private int startSpawnDelay;
 
 
     private void Start()
@@ -18,6 +19,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(startSpawnDelay);
         while (numberOfEnemy > 0)
         {
             numberOfEnemy--;

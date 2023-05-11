@@ -28,8 +28,11 @@ public class MinimapNew : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 newPosition = Player.position;
-        newPosition.y = transform.position.y;
-        transform.position = newPosition;
+        if (Player != null)
+        {
+            Vector3 newPosition = Player.position;
+            newPosition.y = transform.position.y;
+            transform.position = newPosition;
+        }
     }
 }
